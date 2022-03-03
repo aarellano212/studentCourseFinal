@@ -12,8 +12,13 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       User.hasOne(models.Student, {
-            as: 'student',
-            foreignKey: 'user_id'
+              as: 'student',
+              foreignKey: 'user_id'
+          }
+      );
+      User.hasOne(models.Staff, {
+              as: 'staff',
+              foreignKey: 'user_id'
           }
       )
     }
@@ -21,7 +26,16 @@ module.exports = (sequelize, DataTypes) => {
   User.init({
     email: DataTypes.STRING,
     password: DataTypes.STRING,
-    role: DataTypes.STRING
+    role: DataTypes.STRING,
+    displayName: {
+      type:DataTypes.VIRTUAL,
+      get(){
+        if(this.student){
+          return this.student.first_name;
+        };
+        return this.staff.first_name;
+      }
+    }
   }, {
     sequelize,
     modelName: 'User',

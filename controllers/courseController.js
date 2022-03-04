@@ -112,7 +112,7 @@ module.exports.enrollStudent = async function(req, res){
     res.redirect(`/courses/profile/${req.params.courseId}`)
 }
 
-//remove a student from a course        bdskfk
+//remove a student from a course       
 module.exports.removeStudent = async function(req, res){
     const isAdmin = req.user.can('drop student');
     const profileBelongsToUser = req.user.can('drop self') && req.user.matchesStudentId(req.params.studentId);
